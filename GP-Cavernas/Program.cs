@@ -13,7 +13,7 @@ namespace GP_Cavernas
             n = Convert.ToInt32(args[2]);
 
             // Initializes the map
-            char[,] wolrd = WorldGeneration(lin, cols);
+            char[,] wolrd = WorldGeneration(cols, lin);
 
             MapPrinter(cols, lin, wolrd);
             //int[,] newWorld = new int[lin, cols];
@@ -26,7 +26,7 @@ namespace GP_Cavernas
             char[,] world = new char[lin, cols];
             for (int i = 0; i < lin; i++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j <cols; j++)
                 {
                     if (rnd.Next(1, 4) < 3)
                         world[i, j] = 'g';
@@ -38,9 +38,9 @@ namespace GP_Cavernas
         }
         private static void MapPrinter(int cols, int lin, char[,] map)
         {
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < lin; i++)
             {
-                for (int j = 0; j < lin; j++)
+                for (int j = 0; j < cols; j++)
                 {
                     if (map[i, j] == 'g')
                         Console.Write(".");
