@@ -12,18 +12,30 @@ namespace GP_Cavernas
             cols = Convert.ToInt32(args[1]);
             n = Convert.ToInt32(args[2]);
 
-            // Initializes the map
+            // Initializes the maps
+            char[,] newWorld;
+            char[,] auxWorld;
+            // Generates a random base world
             char[,] world = WorldGeneration(cols, lin);
-            MapPrinter(cols, lin, world);
-            Console.WriteLine("");
+
+            //MapPrinter(cols, lin, world);
+            Console.WriteLine("----------------");
+            // Loops the instructions according to the user input
             for (int i = 0; i < n; i++)
             {
-                char[,] newWorld = MooreRockMaker(world, lin, cols);
+                // Generates a new map according to the moore neighbour rule
+                newWorld = MooreRockMaker(world, lin, cols);
+
+                auxWorld = WorldSwitch(world, lin, cols);
+
+                world = WorldSwitch(newWorld, lin, cols);
+
+                newWorld = WorldSwitch(auxWorld, lin, cols);
                 MapPrinter(cols, lin, newWorld);
+                MapPrinter(cols, lin, world);
                 Console.WriteLine("");
             }
 
-            //int[,] newWorld = new int[lin, cols];
             //int[,] auxWorld = new int[lin, cols];
         }
         private static char[,] MooreRockMaker(char[,]world, int lin, int cols)
@@ -124,6 +136,21 @@ namespace GP_Cavernas
                 }
                 Console.WriteLine("");
             }
+        }
+        private static char[,] WorldSwitch(char[,] world, int lin, int cols)
+        {
+            char[,] newWorld = new char[lin,cols];
+            for (int i = 0; i < lin; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (world[i, j] == 'g')
+                        newWorld[i, j] = 'g';
+                    else
+                        newWorld[i, j] = 'r';
+                }
+            }
+            return newWorld;
         }
     }
 }
