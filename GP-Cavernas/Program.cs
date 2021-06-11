@@ -17,6 +17,7 @@ namespace GP_Cavernas
             char[,] auxWorld;
             // Generates a random base world
             char[,] world = WorldGeneration(cols, lin);
+            MapPrinter(cols, lin, world);
 
             //MapPrinter(cols, lin, world);
             Console.WriteLine("----------------");
@@ -25,15 +26,19 @@ namespace GP_Cavernas
             {
                 // Generates a new map according to the moore neighbour rule
                 newWorld = MooreRockMaker(world, lin, cols);
-
-                auxWorld = WorldSwitch(world, lin, cols);
-
-                world = WorldSwitch(newWorld, lin, cols);
-
-                newWorld = WorldSwitch(auxWorld, lin, cols);
                 MapPrinter(cols, lin, newWorld);
-                MapPrinter(cols, lin, world);
                 Console.WriteLine("");
+                MapPrinter(cols, lin, world);
+                //Switches the  worlds references
+                auxWorld = WorldSwitch(world, lin, cols);
+                world = WorldSwitch(newWorld, lin, cols);
+                newWorld = WorldSwitch(auxWorld, lin, cols);
+
+                //Prints the worlds
+                MapPrinter(cols, lin, newWorld);
+                Console.WriteLine("");
+                MapPrinter(cols, lin, world);
+
             }
 
             //int[,] auxWorld = new int[lin, cols];
@@ -81,7 +86,6 @@ namespace GP_Cavernas
                     // Verifie if all neighbours are rocks
                     if (neig >= 5)
                     {
-                        Console.WriteLine("NEWROCK");
                         newWorld[i, j] = 'r';
                     }
                     else
